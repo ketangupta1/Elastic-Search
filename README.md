@@ -33,8 +33,7 @@
         "id": 1
       }
     - All keys starting with "_"  
-    - Every node contains metadata like index, type, id, source, etc.
-      
+- Every node contains metadata like index, type, id, source, etc.
       {
         "_index": " ",
         "_type": " ",
@@ -44,11 +43,20 @@
         "_source":
       }
 
-      "_source" contains the actual data. So every document is: metadata+JSON
+- "_source" contains the actual data. So every document is: metadata+JSON
 
-    - Some comparison with elasticsearch and RDBMS for understanding purposes only:
-        - Document <-> rows in SQL
-        - Fields <-> columns in SQL
-        - Index <-> Table in SQL
+- Some comparison with elasticsearch and RDBMS for understanding purposes only:
+    - Document <-> rows in SQL
+    - Fields <-> columns in SQL
+    - Index <-> Table in SQL
 
-    - Documents are grouped together by indices.
+- Documents are grouped together by indices.
+ 
+## Elasticsearch REST-API
+- There are two methods of getting data from elasticsearch. Using query and by using REST-API
+- When we want data from elasticsearch we are running a query but that query is converted to the REST-API.
+- To write API on kibana UI go to management->Dev Tools. Here we will write API.
+- The structure of API contains: Method+API-name(started with _)+Command
+    - GET _cluster/health
+    - GET _cat/nodes?v: "_cat" data should come in a human-readable format. "?v" header should also come
+    - GET _cat/indices?v&expand_wildcards=all
