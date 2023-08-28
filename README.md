@@ -36,9 +36,9 @@
     - Every node contains metadata like index, type, id, source, etc.
       
       {
-        "_index":
-        "_type":
-        "_id":
+        "_index": " ",
+        "_type": " ",
+        "_id": " ",
         ......
         ......
         "_source":
