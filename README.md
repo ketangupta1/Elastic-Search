@@ -60,3 +60,11 @@
     - GET _cluster/health
     - GET _cat/nodes?v: "_cat" data should come in a human-readable format. "?v" header should also come
     - GET _cat/indices?v&expand_wildcards=all
+
+## Access it from query
+- Open your terminal.
+- For sending HTTP requests from the terminal curl is used.
+- write command:
+-      curl -X GET -k -u username:password https://localhost:9200
+-  -k is used for bypassing the security
+-      curl -X GET -k -u username:password https://localhost:9200/_cluster/health
