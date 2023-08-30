@@ -80,11 +80,11 @@
 
 ## CRUD Operations
 - Check cluster health.
--     GET _cluster/health
+  -     GET _cluster/health
 - Check nodes.
--      GET _cat/nodes?v
+  -     GET _cat/nodes?v
 - Check shards.
--     GET _cat/shards?v
+  -     GET _cat/shards?v
 - Create index:
   -     PUT index_name
   -     PUT index_name
