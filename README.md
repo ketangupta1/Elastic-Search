@@ -74,5 +74,35 @@
 - Each piece is called shard.
 - Sharding is done at the index level.
 - Sharding improves performance by parallelization of the query. By default, every node has only one shard and each shard has the capacity of 2 billion documents only. If there are more than 2 billion documents then sharding will be performed.
-- e.g: Let's assume we have a document and there are two indices students and teachers with a combined space of 900 GB, but our node has space of 500 GB only Then we will take 2     nodes of 500 GB each and will do sharding of indices. we will do sharding like putting students in the first node and teachers in 2nd node but there will be a problem what if students index alone size might be 800 GB and teachers index size will be only 100 GB. So we are doing sharding at index level shard both teachers as well as students indices.
+- e.g: Let's assume we have a document and there are two indices students and teachers with a combined space of 900 GB, but our node has space of 500 GB only Then we will take 2     nodes of 500 GB each and will do sharding of indices. we will do sharding like putting students in the first node and teachers in 2nd node but there will be a problem what if students index alone size is 800 GB and teachers index size will be only 100 GB. So we are doing sharding at index level shard both teachers as well as students indices.
 - split and shrink API is there to perform sharding.
+
+
+## CRUD Operations
+- Check cluster health.
+-     GET _cluster/health
+- Check nodes.
+-      GET _cat/nodes?v
+- Check shards.
+-     GET _cat/shards?v
+- Create index:
+-     PUT index_name
+-     PUT index_name
+      {
+        "settings": {
+          "number_of_shards": 2,
+          "number_of_replicas": 2
+        }
+      }
+- Delete index
+-     DELETE index_name
+- Add document to the index
+-     POST index_name/_doc
+      {
+        request body
+      }
+  If you want to provide id by yourself:
+-     POST index_name/_doc/8765490534
+      {
+        request body
+      }
