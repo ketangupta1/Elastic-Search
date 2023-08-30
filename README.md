@@ -168,7 +168,8 @@
         }
       }
   ctx will provide the whole document for the provided id, there is _source(data that we are providing stored in this) key and and inside source age si present so update the age to 20
-      With script and params both:
+
+  With script and params both:
   
       POST index_name/_update/765785452
       {
@@ -198,7 +199,7 @@
     Multiline script is written under two double quotes(""), above it is three bcz one is for source. if age is less than or equal to 0 then ctx.op='noop' means no operations. else decrease the age by 1. If we write ctx.op='delete' then in this condition if age is less than or equal to 0 delete that document.
 
 - Upsert
-  If there is no document for the id provided and we try to update that document then there will be error. So upsert is used to handle that if no document is there then create a new one provided in the upsert.
+    If there is no document for the id provided and we try to update that document then there will be error. So upsert is used to handle that if no document is there then create a new one provided in the upsert.
   
       POST index_name/_update/id
       {
