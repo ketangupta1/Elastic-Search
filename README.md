@@ -80,29 +80,46 @@
 
 ## CRUD Operations
 - Check cluster health.
-  -     GET _cluster/health
+
+      GET _cluster/health
 - Check nodes.
-  -     GET _cat/nodes?v
+
+      GET _cat/nodes?v
 - Check shards.
-  -     GET _cat/shards?v
+  
+      GET _cat/shards?v
 - Create index:
-  -     PUT index_name
-  -     PUT index_name
-        {
-          "settings": {
-            "number_of_shards": 2,
-            "number_of_replicas": 2
-          }
+
+      PUT index_name
+    Creating index by giving parameter
+  
+      PUT index_name
+      {
+      "settings": {
+        "number_of_shards": 2,
+        "number_of_replicas": 2
         }
+      }
 - Delete index
--     DELETE index_name
+  -     DELETE index_name
 - Add document to the index
   -     POST index_name/_doc
         {
           request body
         }
   If you want to provide id by yourself:
-  -     POST index_name/_doc/8765490534
+  -     POST index_name/_doc/id
         {
           request body
+        }
+- Delete document from the index
+  -     DELETE index_name/_doc/id
+- Fetch document in index
+  -     GET index_name/_doc/id
+- Search for document
+  -     GET index_name/_search
+        {
+          "query": {
+            "match_all": {}
+          }
         }
