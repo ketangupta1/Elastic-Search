@@ -101,25 +101,98 @@
         }
       }
 - Delete index
-  -     DELETE index_name
+  
+      DELETE index_name
 - Add document to the index
-  -     POST index_name/_doc
-        {
-          request body
-        }
+  
+      POST index_name/_doc
+      {
+        request body
+        "name": "Rahul",
+        "age": 35
+      }
   If you want to provide id by yourself:
-  -     POST index_name/_doc/id
-        {
-          request body
-        }
+  
+      POST index_name/_doc/id
+      {
+        request body
+        "name": "Mohit",
+        "age": 24
+      }
 - Delete document from the index
-  -     DELETE index_name/_doc/id
+  
+      DELETE index_name/_doc/id
 - Fetch document in index
-  -     GET index_name/_doc/id
+  
+      GET index_name/_doc/id
 - Search for document
-  -     GET index_name/_search
-        {
-          "query": {
-            "match_all": {}
+  
+      GET index_name/_search
+      {
+        "query": {
+          "match_all": {}
+        }
+      }
+- Update document
+
+      POST index_name/_update/id
+      {
+        "doc": {
+          add_new_field or update_existing_field
+          "age": 5,
+          "last_name": "Sharma"
+        }
+      }
+    When we are updating in elasticsearch it is not updating the document it replaces the document, because replacing is more efficient.
+
+- Scripted Update
+    We can write our own custom logic.
+
+      POST index_name/_update/id
+      {
+        "script": {
+          "source": "script"
+          "params": {
+            write your parameter
           }
         }
+      }
+
+    e.g:
+      With script only:
+      POST student/_update/765785452
+      {
+        "script": {
+          "source": "ctx._source.age = 20"
+        }
+      }
+      ctx will provide the whole document for the provided id, there is _source(data that we are providing stored in this) key and and inside source age si present so update the age to 20
+      With script and params both:
+      POST index_name/_update/765785452
+      {
+        "script": {
+          "source": "ctx._source.age = params.new_age"
+          "params": {
+            "new_age": 5
+          }
+        }
+      }
+      In the 1st example condition is hard coded but here it is in the params.
+
+- Multiline Script
+
+      POST index_name/_update/id
+      {
+        "script": {
+          "source": """
+          if(ctx._source.age<=0){
+            ctx.op = 'noop';
+          }
+          else{
+            ctx._source.age--;
+          }"""
+        }
+      }
+    Multiline script is written under two double quotes(""), above it is three bcz one is for source. if age is less than or equal to 0 then ctx.op='noop' means no operations. else decrease the age by 1. If we write ctx.op='delete' then in this condition if age is less than or equal to 0 delete that document.
+
+
