@@ -86,23 +86,23 @@
 - Check shards.
 -     GET _cat/shards?v
 - Create index:
--     PUT index_name
--     PUT index_name
-      {
-        "settings": {
-          "number_of_shards": 2,
-          "number_of_replicas": 2
+  -     PUT index_name
+  -     PUT index_name
+        {
+          "settings": {
+            "number_of_shards": 2,
+            "number_of_replicas": 2
+          }
         }
-      }
 - Delete index
 -     DELETE index_name
 - Add document to the index
--     POST index_name/_doc
-      {
-        request body
-      }
+  -     POST index_name/_doc
+        {
+          request body
+        }
   If you want to provide id by yourself:
--     POST index_name/_doc/8765490534
-      {
-        request body
-      }
+  -     POST index_name/_doc/8765490534
+        {
+          request body
+        }
