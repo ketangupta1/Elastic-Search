@@ -233,10 +233,10 @@
         "min_score": 0.5,                        // Whenever we write any query elasticsearch gives a score by default. Here it will not return any document whose score is less than 0.5
         "query": {  
           "bool": {                              
-            "must": [],                          // Must stands for 'and' operator
+            "must": [],                          // Must stands for 'AND' operator
             "filter": [],                        // Filter stands for filtering
-            "should": [],                        // should stands for 'or' operator
-            "must_not": []                       // must_not stands for 'not' operator
+            "should": [],                        // should stands for 'OR' operator
+            "must_not": []                       // must_not stands for 'NOT' operator
           }
         }
       }
@@ -312,7 +312,7 @@
           }
         }
       }
-  The above query will search the words "Blood" and "Father" both in the text of each document.
+  The above query will search the words "Blood" and "Father" both words in the text of each document.
 
       GET learn/_search
       {
@@ -341,3 +341,51 @@
         }
       }
   The above query will search for the word "Blood" or "Father" If any word is present in the text that document will be the part of result.
+
+- Nested bool
+  Write a query: Title contains "Norm" OR "King" but NOT contains the word "Sized" OR "Shaman".
+
+      GET learn/_search
+      {
+        "_source": ["title"],
+        "size": 20,
+        "min_score": 0.5,
+        "query": {
+          "bool": {
+            "must": [],
+            "filter": [],
+            "should": [
+              {
+                "match": {
+                  "title": "King"
+                }
+              }
+              ,
+              {
+                "match": {
+                  "title": "Norm"
+                }
+              }
+              ],
+            "must_not": [
+              {
+                "bool": {
+                  "should": [
+                    {
+                      "match": {
+                        "title": "Sized"
+                      }
+                    },
+                    {
+                      "match": {
+                        "title": "Shaman"
+                      }
+                    }
+                  ]
+                }
+              }
+              ]
+          }
+        }
+      }
+  
