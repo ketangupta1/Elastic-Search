@@ -213,10 +213,131 @@
         }
       }
 - Replace
-  It will replace the old document with new provided one.
+  It will replace the old document with the new one provided.
   
       PUT index_name/_doc/id
       {
         "name": "Piyush",
         "age": 28
       }
+
+
+
+## Learn Query
+- Searching
+
+      GET learn/_search
+      {
+        "_source": ["title", "duration"],        // It stands for what field you want the elasticsearch to return. Here the title and duration will be returned.
+        "size": 20,                              // How many documents do you want to return in the search. Maxm size is 10k, if you want more than that you need to do pagination
+        "min_score": 0.5,                        // Whenever we write any query elasticsearch gives a score by default. Here it will not return any document whose score is less than 0.5
+        "query": {  
+          "bool": {                              
+            "must": [],                          // Must stands for 'and' operator
+            "filter": [],                        // Filter stands for filtering
+            "should": [],                        // should stands for 'or' operator
+            "must_not": []                       // must_not stands for 'not' operator
+          }
+        }
+      }
+- Match and match Phrase
+
+      PUT foo/_doc/1
+      {"text": "i love elk its great"}
+      
+      PUT foo/_doc/2
+      {"text": "i ELK search"}
+      
+      PUT foo/_doc/3
+      {"text": "Elk elastic search"}
+  Created index foo and added 3 documents with id 1,2 and 3 respectively.
+  Now i'm gonna search in these documents.
+
+      GET foo/_search
+      {
+        "query": {
+          "match": {
+            "text": "elk"
+          }
+        }
+      }
+  The above search will return all the documents.
+
+      GET foo/_search
+      {
+        "query": {
+          "match": {
+            "text": "elk search"
+          }
+        }
+      }
+  The above query will also give 3 results. This is because the elasticsearch will search for elk and search separately. To get an exact match MATCH PHRASE is used.
+
+      GET foo/_search
+      {
+        "query": {
+          "match_phrase": {
+            "text": "elk search"
+          }
+        }
+      }
+  there is only one result for the above query because elk search is present in only one document only.
+
+
+- searching with must and match
+
+      GET learn/_search
+      {
+        "_source": ["title"],
+        "size": 20,
+        "min_score": 0.5,
+        "query": {
+          "bool": {
+            "must": [
+              {
+                "match": {
+                  "title": "Blood"
+                }
+              }
+              ,
+              {
+                "match": {
+                  "title": "Father"
+                }
+              }
+              ],
+            "filter": [],
+            "should": [],
+            "must_not": []
+          }
+        }
+      }
+  The above query will search the words "Blood" and "Father" both in the text of each document.
+
+      GET learn/_search
+      {
+        "_source": ["title"],
+        "size": 20,
+        "min_score": 0.5,
+        "query": {
+          "bool": {
+            "must": [],
+            "filter": [],
+            "should": [
+              {
+                "match": {
+                  "title": "Blood"
+                }
+              }
+              ,
+              {
+                "match": {
+                  "title": "Father"
+                }
+              }
+              ],
+            "must_not": []
+          }
+        }
+      }
+  The above query will search for the word "Blood" or "Father" If any word is present in the text that document will be the part of result.
