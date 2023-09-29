@@ -198,6 +198,29 @@
       }
     Multiline script is written under two double quotes(""), above it is three bcz one is for source. if age is less than or equal to 0 then ctx.op='noop' means no operations. else decrease the age by 1. If we write ctx.op='delete' then in this condition if age is less than or equal to 0 delete that document.
 
+- Update field with null value using _update_by_query: 
+
+      index_name/_update_by_query
+      {
+        "script": {
+          "source": "ctx._source.grade = params ",
+          "params": {
+      			"grade_description": "Grade_13",
+      			"grade_code": "13"
+      	},
+          "lang": "painless"
+        },
+        "query": {
+          "bool": {
+              "must_not": {
+                  "exists": {
+                      "field": "grade.grade_code"
+                  }
+              }
+          }
+      }
+      }
+
 - Upsert
 
   If there is no document for the id provided and we try to update that document then there will be error. So upsert is used to handle that if no document is there then create a new one provided in the upsert.
@@ -388,4 +411,3 @@
           }
         }
       }
-  
