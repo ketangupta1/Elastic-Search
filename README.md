@@ -71,10 +71,10 @@
 
 ## Sharding
 - Sharding is a way to divide indices into small pieces.
-- Each piece is called shard.
+- Each piece is called a shard.
 - Sharding is done at the index level.
 - Sharding improves performance by parallelization of the query. By default, every node has only one shard and each shard has the capacity of 2 billion documents only. If there are more than 2 billion documents then sharding will be performed.
-- e.g: Let's assume we have a document and there are two indices students and teachers with a combined space of 900 GB, but our node has space of 500 GB only Then we will take 2     nodes of 500 GB each and will do sharding of indices. we will do sharding like putting students in the first node and teachers in 2nd node but there will be a problem what if students index alone size is 800 GB and teachers index size will be only 100 GB. So we are doing sharding at index level shard both teachers as well as students indices.
+- e.g: Let's assume we have a document and there are two indices students and teachers with a combined space of 900 GB, but our node has space of 500 GB only Then we will take 2     nodes of 500 GB each and will do sharding of indices. we will do sharding like putting students in the first node and teachers in 2nd node but there will be a problem if students index alone size is 800 GB and teachers index size will be only 100 GB. So we are doing sharding at index level shard both teachers as well as students indices.
 - split and shrink API is there to perform sharding.
 
 
@@ -122,7 +122,7 @@
 - Delete document from the index
   
       DELETE index_name/_doc/id
-- Fetch document in index
+- Fetch document in the index
   
       GET index_name/_doc/id
 - Search for document
@@ -274,7 +274,7 @@
       PUT foo/_doc/3
       {"text": "Elk elastic search"}
   Created index foo and added 3 documents with id 1,2 and 3 respectively.
-  Now i'm gonna search in these documents.
+  Now I'm going to search in these documents.
 
       GET foo/_search
       {
@@ -304,7 +304,7 @@
           }
         }
       }
-  there is only one result for the above query because elk search is present in only one document only.
+  there is only one result for the above query because elk search is present in only one document.
 
 
 - searching with must and match
@@ -366,7 +366,7 @@
   The above query will search for the word "Blood" or "Father" If any word is present in the text that document will be the part of result.
 
 - Nested bool
-  Write a query: Title contains "Norm" OR "King" but NOT contains the word "Sized" OR "Shaman".
+  Write a query: Title contains "Norm" OR "King" but NOT contain the word "Sized" OR "Shaman".
 
       GET learn/_search
       {
@@ -409,5 +409,35 @@
               }
               ]
           }
+        }
+      }
+  
+- Creating new index with same mapping and settings:
+  First copy the mappings and settings from the old index.
+
+      GET old_index_name/_mappings
+      GET old_index_name/_settings
+  Now create the new index:
+
+      PUT /new_index_name
+      {
+        "settings": {
+          "number_of_shards": 1
+        },
+        "mappings": {
+          "properties": {
+            "field1": { "type": "text" }
+          }
+        }
+      }
+  For copying data from the old index to the new use reindex API:
+
+      POST _reindex
+      {
+        "source": {
+          "index": "my-index-000001"
+        },
+        "dest": {
+          "index": "my-new-index-000001"
         }
       }
