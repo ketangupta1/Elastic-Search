@@ -412,7 +412,7 @@
         }
       }
   
-- Creating new index with same mapping and settings:
+- Creating new index with same mapping and settings( Copying index ):
   First copy the mappings and settings from the old index.
 
       GET old_index_name/_mappings
