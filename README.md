@@ -197,6 +197,21 @@
         }
       }
     Multiline script is written under two double quotes(""), above it is three bcz one is for source. if age is less than or equal to 0 then ctx.op='noop' means no operations. else decrease the age by 1. If we write ctx.op='delete' then in this condition if age is less than or equal to 0 delete that document.
+- Update by using _update_by_query:
+
+      POST my-index-000001/_update_by_query
+      {
+        "script": {
+          "source": "ctx._source.count++",
+          "lang": "painless"
+        },
+        "query": {
+          "term": {
+            "user.id": "kimchy"
+          }
+        }
+      }
+
 
 - Update field with null value using _update_by_query: 
 
