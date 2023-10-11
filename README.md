@@ -456,3 +456,32 @@
           "index": "my-new-index-000001"
         }
       }
+- Add new or update existing mapping in index:
+    PUT /index_name/_mapping
+  
+      {
+        "properties": {
+          "manager": {
+            "properties": {
+              "manager_id": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "manager_name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
