@@ -457,8 +457,8 @@
         }
       }
 - Add new or update existing mapping in index:
-    PUT /index_name/_mapping
   
+      PUT /index_name/_mapping
       {
         "properties": {
           "manager": {
